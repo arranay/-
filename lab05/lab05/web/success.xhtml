@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+    <h:head>
+        <title>Успешная авторизация</title>
+    </h:head>
+    <h:body>
+        <h:form>            
+            <h:panelGrid columns="1" bgcolor="#CC8AF3" width="600" style="font-size: 20px;">
+                <h:outputText value="#{sessionBean.login}, добро пожаловать" /> 
+            </h:panelGrid>
+        </h:form> 
+        
+        <h:form>            
+            <h:panelGrid columns="4" bgcolor="#D6A6F3" width="600" style="font-size: 20px;">    
+                <h:outputText value="Введите дату события:" />
+                <h:inputText value="#{client.significantDay}">
+                    <f:convertDateTime dateStyle="short" />
+                </h:inputText>
+                <h:commandButton value="GO!" action="#{client.length()}"/>
+                <h:outputText value="#{client.numbDay}" />
+            </h:panelGrid>
+        </h:form> 
+        
+        <h:form>
+            <h:panelGrid columns="8" bgcolor="#CC8AF3" width="600" style="font-size: 20px;">
+                <h:inputText value="#{client.slag1}">
+                    <f:validateLength maximum="3" />
+                    <f:validateLongRange minimum="1" maximum="100" />
+                </h:inputText>
+                <h:commandButton value="+" action="#{client.sum(client.slag1, client.slag2)}"/>
+                <h:commandButton value="-" action="#{client.dif(client.slag1, client.slag2)}"/>
+                <h:commandButton value="*" action="#{client.mult(client.slag1, client.slag2)}"/>
+                <h:commandButton value="/" action="#{client.sub(client.slag1, client.slag2)}"/>
+                <h:inputText value="#{client.slag2}">
+                    <f:validateLength maximum="3" />
+                    <f:validateLongRange minimum="1" maximum="100" />
+                </h:inputText>
+                <h:outputText value="="/>
+                <h:outputText value="#{client.result}" /> 
+            </h:panelGrid>
+        </h:form>
+        
+        <h:panelGrid columns="2" bgcolor="#D6A6F3" width="600" style="font-size: 20px;">
+            <h:link value="Вернутся к проверке пароля" style="color: black" outcome="index" />
+        </h:panelGrid>
+    </h:body>
+</html>
+

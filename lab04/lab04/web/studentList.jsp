@@ -56,6 +56,6 @@
 <form action = <c:url value="/index.jsp" />>
     <input type="submit" value="Назад">
 </form></td> <td> </td><td></td><td>
-</td><td><b><c:out value="Кол-во совершеннолетних студентов: ${eitStud}" /></b>></td></tr></table>
+</td><td><b><c:out value="Кол-во совершеннолетних студентов: ${eitStud}" /></b></td></tr></table>
 </body>
 </html>
