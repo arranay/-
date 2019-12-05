@@ -16,12 +16,14 @@
         <h:form>
             <h:panelGrid columns="2" bgcolor="#FF9B73" width="400" style="font-size: 20px;">
             <h:outputText value="Введите логин"/>
-            <h:inputText value="#{sessionBean.login}">
+            <h:inputText value="#{sessionBean.login}" validatorMessage="Введите логин на английском языке 
+                         с большой буквы, в имени не должны присутствовать символы цифр, 
+                         длина текста от 3 до девяти символов">
                 <f:validateLength minimum="3" maximum="9" />
                 <f:validateRegex pattern='[A-Z]{1}[a-z]*' />
             </h:inputText>
-            <h:outputText value="Введте пароль"/>
-            <h:inputSecret value="#{client.password}">
+            <h:outputText value="Введте пароль" />
+            <h:inputSecret value="#{client.password}" validatorMessage="длина пароля максимум три символа">
                 <f:validateLength maximum="3" />
             </h:inputSecret>
             <h:commandButton value="GO!" style="font-size: 15px;" action="#{client.checkLogin()}"/>

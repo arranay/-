@@ -17,7 +17,8 @@
         <h:form>            
             <h:panelGrid columns="4" bgcolor="#D6A6F3" width="600" style="font-size: 20px;">    
                 <h:outputText value="Введите дату события:" />
-                <h:inputText value="#{client.significantDay}">
+                <h:inputText value="#{client.significantDay}"  validatorMessage="Введите дату по шаблону день.месяц.год">
+                    <f:validateLength minimum="10" maximum="10" />
                     <f:convertDateTime dateStyle="short" />
                 </h:inputText>
                 <h:commandButton value="GO!" action="#{client.length()}"/>
@@ -27,16 +28,14 @@
         
         <h:form>
             <h:panelGrid columns="8" bgcolor="#CC8AF3" width="600" style="font-size: 20px;">
-                <h:inputText value="#{client.slag1}">
-                    <f:validateLength maximum="3" />
+                <h:inputText value="#{client.slag1}" validatorMessage=" Первое слагаемое должно иметь вид числа в диапазоне от 1 до 100">
                     <f:validateLongRange minimum="1" maximum="100" />
                 </h:inputText>
                 <h:commandButton value="+" action="#{client.sum(client.slag1, client.slag2)}"/>
                 <h:commandButton value="-" action="#{client.dif(client.slag1, client.slag2)}"/>
                 <h:commandButton value="*" action="#{client.mult(client.slag1, client.slag2)}"/>
                 <h:commandButton value="/" action="#{client.sub(client.slag1, client.slag2)}"/>
-                <h:inputText value="#{client.slag2}">
-                    <f:validateLength maximum="3" />
+                <h:inputText value="#{client.slag2}" validatorMessage=" Второе слагаеое должно иметь вид числа в диапазоне от 1 до 100">
                     <f:validateLongRange minimum="1" maximum="100" />
                 </h:inputText>
                 <h:outputText value="="/>
