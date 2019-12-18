@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:mc="http://xmlns.jcp.org/jsf/composite/ezcomp">
+
+    <body>
+
+        <ui:composition template="./newTemplate.xhtml">
+            <mc:NewComponent buttonGo="#{client.length()}" 
+                             nDay="#{client.numbDay}"
+                             sDay="#{client.significantDay}"/>
+        
+            <ui:define name="top">
+                
+                <h:form>            
+                    <h:panelGrid columns="1" style="font-size: 20px;">
+                        <h:outputText value="#{sessionBean.login}, добро пожаловать" /> 
+                    </h:panelGrid>
+                </h:form>  
+            </ui:define>
+
+            <ui:define name="content">
+                
+                        <mc:NewComponent buttonGo="#{client.length()}" 
+                             nDay="#{client.numbDay}"
+                             sDay="#{client.significantDay}"/> 
+
+                        <h:form id="form1">
+                            <h:panelGrid columns="8" style="font-size: 20px;">
+                                <h:inputText id="slag1" value="#{client.slag1}" validatorMessage=" Первое слагаемое должно иметь вид числа в диапазоне от 1 до 100">
+                                    <f:validateLongRange minimum="1" maximum="100" />
+                                </h:inputText>
+                                <h:commandButton value="+" action="#{client.sum(client.slag1, client.slag2)}">
+                                    <f:ajax execute = "@all" render = "value1"/>
+                                </h:commandButton>
+                                <h:commandButton value="-" action="#{client.dif(client.slag1, client.slag2)}">
+                                     <f:ajax execute = "@all" render = "value1"/>
+                                </h:commandButton>
+                                <h:commandButton value="*" action="#{client.mult(client.slag1, client.slag2)}">
+                                     <f:ajax execute = "@all" render = "value1"/>
+                                </h:commandButton>
+                                <h:commandButton value="/" action="#{client.sub(client.slag1, client.slag2)}">
+                                     <f:ajax execute = "@all" render = "value1"/>
+                                </h:commandButton>
+                                <h:inputText id="slag2" value="#{client.slag2}" validatorMessage=" Второе слагаеое должно иметь вид числа в диапазоне от 1 до 100">
+                                    <f:validateLongRange minimum="1" maximum="100" />
+                                </h:inputText>
+                                <h:outputText value="="/>
+                                <h:outputText id="value1" value="#{client.result}" /> 
+                            </h:panelGrid>
+                        </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+                <h:panelGrid columns="2" style="font-size: 20px;">
+                    <h:link value="Вернутся к проверке пароля" style="color: black" outcome="indexForTemplate" />
+                </h:panelGrid>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

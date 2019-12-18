@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./NewTemplate.xhtml">
+
+            <ui:define name="top">
+                <h:form>            
+                    <h:panelGrid columns="1" style="font-size: 20px;">
+                        <h:outputText value="Кол-во обращений к странице: #{sessionBean.numb}" /> 
+                    </h:panelGrid>
+                </h:form> 
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <h:panelGrid columns="2" style="font-size: 20px;">
+                    <h:outputText value="Введите логин"/>
+                    <h:inputText value="#{sessionBean.login}" validatorMessage="Введите логин на английском языке 
+                                 с большой буквы, в имени не должны присутствовать символы цифр, 
+                                 длина текста от 3 до девяти символов">
+                        <f:validateLength minimum="3" maximum="9" />
+                        <f:validateRegex pattern='[A-Z]{1}[a-z]*' />
+                    </h:inputText>
+                    <h:outputText value="Введте пароль" />
+                    <h:inputSecret value="#{client.password}" validatorMessage="длина пароля максимум три символа">
+                        <f:validateLength maximum="3" />
+                    </h:inputSecret>
+                    <h:commandButton value="GO!" style="font-size: 15px;" action="#{client.checkLogin()}"/>
+                    </h:panelGrid>
+                </h:form>                  
+            </ui:define>
+            
+            <ui:define name="bottom">
+                <h:form>            
+                    <h:panelGrid columns="1" style="font-size: 20px;">
+                        <h:outputText value="Лабораторная работа"/>
+                        <h:outputText value="Основы разработки веб-приложений с использованием каркаса JSF 2.0" /> 
+                        <h:outputText value="Выполнил студент групы ПРИ-117"/>
+                        <h:outputText value="Хлызова В.Г."/>
+                    </h:panelGrid>
+                </h:form> 
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Изменить данные</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:outputText value="ВЫ МОЖЕТЕ ИЗМЕНИТЬ СЛЕДУЮЩИЕ ДАННЫЕ:" style="font-size: 20px;"/>
+            <br/>
+            <h:panelGrid columns="2" style="font-size: 20px;">
+                <h:outputText value="Логин:"/>
+                <p:inputText value="${userBean.editUser.login}" />
+                <h:outputText value="Дату регистрации:"/>
+                <p:calendar value="${userBean.editUser.dateRegistration}" showOn="button" pattern="dd.MM.yyyy">
+                    <f:convertDateTime type="date" dateStyle="medium" />
+                </p:calendar>
+                <h:outputText value="Кол-во постов:"/>
+                <p:spinner value="${userBean.editUser.numberOrder}"/>
+                <h:commandButton value="Назад" action="index"/>
+                <h:commandButton value="Принять изменения" action="${userBean.editGo()}"/>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+
