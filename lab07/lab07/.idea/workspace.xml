@@ -29,9 +29,9 @@
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
-    <option name="FILTER_WARNINGS" value="true" />
-    <option name="FILTER_INFO" value="true" />
-    <option name="FILTER_DEBUG" value="true" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="false" />
+    <option name="FILTER_DEBUG" value="false" />
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="MavenImportPreferences">
@@ -176,6 +176,7 @@
       <workItem from="1582008549250" duration="4440000" />
       <workItem from="1582024458202" duration="2465000" />
       <workItem from="1582036402567" duration="28519000" />
+      <workItem from="1582821233742" duration="8576000" />
     </task>
     <servers />
   </component>

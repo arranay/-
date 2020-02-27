@@ -1,6 +1,8 @@
 package lab07.dao;
 
 import lab07.models.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,8 +16,10 @@ import java.util.List;
 
 public class UserDao {
     JdbcTemplate template;
+    private static Logger logger= LoggerFactory.getLogger(UserDao.class);
 
     public List<User> getAllUsers(){
+        logger.info("Выполнение метода getAllUsers для вывода всех пользователей");
         try{
             return template.query("select * from user",new RowMapper<User>(){
 
@@ -30,23 +34,37 @@ public class UserDao {
             });
 
         }catch (Exception e){
-            throw new RuntimeException( "An error has occurred in listAllTasks method", e);
+            logger.error("Ошибка при выполнении метода listAllTasks: ", e);
+            return null;
         }
     }
 
     public User getUserById(int idUser){
+        logger.info("Выполнение метода getUserById - получаем информацию о конкретном пользователе");
         String query="select*from user where userId=?";
-        return template.queryForObject(query, new Object[]{idUser}, new BeanPropertyRowMapper<User>(User.class));
+        try{
+            return template.queryForObject(query, new Object[]{idUser}, new BeanPropertyRowMapper<User>(User.class));
+        }catch (Exception e) {
+            logger.error("Ошибка при выполнении метода getUserById: ", e);
+            return null;
+        }
     }
 
     public int update(User user){
+        logger.info("Выполнение метода update - изменение данных о пользователе");
         String query="update user set login=?, password=?, email=? where userId=?";
         Object[] params = {user.getLogin(), user.getPassword(), user.getEmail(), user.getUserId()};
         int[] types = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER};
-        return template.update(query,params,types);
+        try {
+            return template.update(query,params,types);
+        }catch (Exception e) {
+            logger.error("Ошибка при выполнении метода update: ", e);
+            return -1;
+        }
     }
 
     public int insert(User user){
+        logger.info("Выполнение метода insert - добавление нового пользователя");
         String query="insert into user(login, password, email) values (?, ?, ?)";
         Object[] params = {user.getLogin(), user.getPassword(), user.getEmail()};
         int[] types = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
