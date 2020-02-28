@@ -36,14 +36,14 @@ public class UserController {
         return "editUser";
     }
 
-    @RequestMapping(value = "show/editsave", method = RequestMethod.POST)
+    @RequestMapping(value = "show/editsave")
     public String editSave(@ModelAttribute("command") User user){
         int id = userDao.update(user);
         if (id!=-1) return  "redirect:../viewusers";
         else return "redirect:/error";
     }
 
-    @RequestMapping(value="/saveuser",method = RequestMethod.POST)
+    @RequestMapping(value="/saveuser")
     public String saveUser(@ModelAttribute("command") User user){
         int id = userDao.insert(user);
         if (id!=-1) return "redirect:/viewusers";
@@ -56,7 +56,7 @@ public class UserController {
         return "addUser";
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}")
     public String delete(@PathVariable int id){
         int i = userDao.delete(id);
         if (i!=-1) return "redirect:/viewusers";
