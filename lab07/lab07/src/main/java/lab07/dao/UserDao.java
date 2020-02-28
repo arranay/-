@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
+@Repository
 public class UserDao {
     JdbcTemplate template;
     private static Logger logger= LoggerFactory.getLogger(UserDao.class);
@@ -68,14 +69,25 @@ public class UserDao {
         String query="insert into user(login, password, email) values (?, ?, ?)";
         Object[] params = {user.getLogin(), user.getPassword(), user.getEmail()};
         int[] types = {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
-        return template.update(query,params,types);
+        try {
+            return template.update(query,params,types);
+        }catch (Exception e) {
+            logger.error("Ошибка при выполнении метода insert: ", e);
+            return -1;
+        }
     }
 
     public int delete(int idUser){
+        logger.info("Выполнение метода delete - удаление пользователя");
         String query="delete from user where userId=?";
         Object[] params = {idUser};
         int[] types = {Types.INTEGER};
-        return template.update(query,params,types);
+        try {
+            return template.update(query,params,types);
+        }catch (Exception e) {
+            logger.error("Ошибка при выполнении метода delete: ", e);
+            return -1;
+        }
     }
 
     public void setTemplate(JdbcTemplate template) {

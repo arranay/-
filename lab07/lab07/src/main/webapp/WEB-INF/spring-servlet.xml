@@ -22,7 +22,7 @@
         <property name="dataSource" ref="ds"></property>
     </bean>
 
-    <bean id="dao" class="lab07.dao.UserDao">
+    <bean id="UserDao" class="lab07.dao.UserDao">
         <property name="template" ref="jt"></property>
     </bean>
 </beans>

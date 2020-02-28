@@ -1,5 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -25,6 +26,8 @@
 </head>
 <a href="index">Вернутся назад</a>
 <center><h3>Список пользователей</h3></center>
+<c:choose>
+<c:when test="${fn:length(list) gt 0}">
 <table border="2" width="70%" cellpadding="2">
     <tr><td>Id</td><td>nickname</td><td>пароль</td><td>email</td><td colspan="2">Действия</td></tr>
     <c:forEach var="user" items="${list}">
@@ -38,5 +41,9 @@
         </tr>
     </c:forEach>
 </table>
+    </c:when>
+    <c:otherwise>
+        <center><h3>Список пуст, добавте пользователя</h3></center>
+    </c:otherwise></c:choose>
 </body>
 </html>
