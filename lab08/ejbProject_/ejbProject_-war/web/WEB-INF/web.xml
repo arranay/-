@@ -12,6 +12,10 @@
         <servlet-name>addUser</servlet-name>
         <servlet-class>servlet.addUser</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>statistics</servlet-name>
+        <servlet-class>servlet.statistics</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/user</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>addUser</servlet-name>
         <url-pattern>/addUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>statistics</servlet-name>
+        <url-pattern>/statistics</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -18,7 +18,9 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.sql.DataSource;
+import singlton.countAddUser;
 
 /**
  *
@@ -111,11 +113,15 @@ public class UserDao implements UserDaoLocal {
         }
         return false;
     }
-
+    
+    
+    
     @Override
     public boolean insertUser(User user) {
+        
          query = "insert into user (login, email, password, birthdate) " +
                 "values (?, ?, ?, ?);";
+         
         try(Connection con = DriverManager.getConnection(url, username, password)){
             PreparedStatement pStmt = con.prepareStatement(query);
             pStmt.setString(1, user.getLogin());

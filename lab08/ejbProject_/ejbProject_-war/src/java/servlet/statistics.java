@@ -5,31 +5,24 @@
  */
 package servlet;
 
-import dao.UserDaoLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.User;
-import sessionBean.SessionBeanLocal;
 import singlton.countAddUser;
 import singlton.countDeleteUser;
+import singlton.countUpdateUser;
 
 /**
  *
  * @author Лера
  */
-
-//@WebServlet("/user")
-public class UserServlet extends HttpServlet {
-   
-   
+public class statistics extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,32 +41,34 @@ public class UserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserServlet</title>");            
+            out.println("<title>Servlet statistics</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet statistics at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
     
     
+    @EJB
+    private countAddUser caUser;
     
-    @EJB 
-    private UserDaoLocal userDao;
+    @EJB
+    private countDeleteUser cdUser;
     
+    @EJB
+    private countUpdateUser cuUser;
+   
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
-            List<User> userList = userDao.getAllUser();
-            request.setAttribute("userList", userList);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("userList.jsp");
+
+            request.setAttribute("add", caUser.getCount());
+            request.setAttribute("delete", cdUser.getCount());
+            request.setAttribute("update", cuUser.getCount());
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("statistics.jsp");
             requestDispatcher.forward(request, response);
-        }catch (Exception e) { 
-            throw new ServletException(e.getMessage()); 
-        } 
-        
     }
 
     /**
@@ -84,21 +79,10 @@ public class UserServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @EJB
-    SessionBeanLocal slBean;
-    
-    @EJB
-    private countDeleteUser caUser;
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {    
-        RequestDispatcher dispatcher;
-        int id = Integer.parseInt(request.getParameter("id"));
-        userDao.Delete(id);
-        caUser.plus();
-        dispatcher=request.getRequestDispatcher("index.jsp");
-        dispatcher.forward(request,response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**

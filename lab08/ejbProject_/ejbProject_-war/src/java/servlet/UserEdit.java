@@ -16,6 +16,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.User;
+import sessionBean.SessionBeanLocal;
+import singlton.countAddUser;
+import singlton.countDeleteUser;
+import singlton.countUpdateUser;
 
 /**
  *
@@ -48,16 +52,6 @@ public class UserEdit extends HttpServlet {
             out.println("</html>");
         }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     
     @EJB 
     private UserDaoLocal userDao;
@@ -84,6 +78,12 @@ public class UserEdit extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @EJB
+    SessionBeanLocal slBean;
+    
+    @EJB
+    private countUpdateUser caUser;
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -104,6 +104,7 @@ public class UserEdit extends HttpServlet {
         user.setEmail(request.getParameter("newEmail"));
         user.setPassword(request.getParameter("newPass"));
         userDao.editUser(user);
+        caUser.plus();
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);
     }

@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Главная страница</title>
     </head>
     <body>
         <form action = "user" method="get">
@@ -18,6 +18,10 @@
         <br>
         <form action = "addUser" method="get">
             <input type="submit" value="Добавить пользователя">
+        </form>
+        <br>
+        <form action = "statistics" method="get">
+            <input type="submit" value="Статистика">
         </form>
     </body>
 </html>
