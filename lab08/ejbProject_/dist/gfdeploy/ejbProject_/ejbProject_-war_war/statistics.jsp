@@ -1,9 +1,3 @@
-<%-- 
-    Document   : statistics
-    Created on : 12.03.2020, 22:56:00
-    Author     : Лера
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>

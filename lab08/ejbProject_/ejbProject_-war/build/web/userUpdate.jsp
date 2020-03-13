@@ -1,9 +1,3 @@
-<%-- 
-    Document   : userUpdate
-    Created on : 11.03.2020, 21:41:12
-    Author     : Лера
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>

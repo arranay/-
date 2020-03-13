@@ -1,9 +1,3 @@
-<%-- 
-    Document   : addUser
-    Created on : 12.03.2020, 17:57:52
-    Author     : Лера
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -38,10 +32,8 @@
                 <td>
                     <input required type="submit" value="Сохранить"/>
                 </td></tr>
-            </table>
-        
-        
-            
+            </table>   
     </form>
     </body>
 </html>
+

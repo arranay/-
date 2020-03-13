@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import java.util.ArrayList;
@@ -17,25 +12,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
-import javax.ejb.EJB;
-import javax.sql.DataSource;
-import singlton.countAddUser;
+import javax.annotation.PostConstruct;
+import javax.interceptor.Interceptors;
+import singlton.interceptor;
+import singlton.interceptorDelete;
+import singlton.interceptorUpdate;
 
-/**
- *
- * @author Лера
- */
 @Stateless
 public class UserDao implements UserDaoLocal {
     
-    //@Resource("jdbc/buymypoem")
-    //private DataSource dataSource;
-    
-   private static String url = "jdbc:mysql://localhost:3306/buymypoem?useSSL=false&useUnicode=true&serverTimezone=Europe/Moscow";
-   private static String username = "root";    
-   private static String password = "";
+   private static String url;
+   private static String username; 
+   private static String password;
    private String query;
+   
+   @PostConstruct
+   private void init(){
+       url = "jdbc:mysql://localhost:3306/buymypoem?"
+               + "useSSL=false&useUnicode=true&serverTimezone=Europe/Moscow";
+       username = "root";  
+       password = "";
+   }
 
 
     @Override
@@ -48,8 +45,6 @@ public class UserDao implements UserDaoLocal {
            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
        }
         try (  
-                /* con = /*dataSource.getConnection();*/
-            
              Connection con = DriverManager.getConnection(url, username, password);
              Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query);) {
             while (rs.next()) {
@@ -59,7 +54,7 @@ public class UserDao implements UserDaoLocal {
                 userList.add(user);
             }
         } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
+            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, sqlEx);
         }
         return userList; 
     }   
@@ -70,12 +65,13 @@ public class UserDao implements UserDaoLocal {
         try (Connection con = DriverManager.getConnection(url, username, password)) {
             if(con.prepareStatement(query).executeUpdate()>0) return true;
         }catch (SQLException sqlEx){
-            sqlEx.printStackTrace();
+             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, sqlEx);
         }
         return false;
     }
     
     @Override
+    @Interceptors(interceptorDelete.class)
     public User getById(int id) {
        User user = null;
        query = "select*from user where userId = " + id + ";";
@@ -85,8 +81,6 @@ public class UserDao implements UserDaoLocal {
            Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
        }
         try (  
-                /* con = /*dataSource.getConnection();*/
-            
              Connection con = DriverManager.getConnection(url, username, password);
              Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query);) {
             while (rs.next()) {
@@ -95,12 +89,13 @@ public class UserDao implements UserDaoLocal {
                         rs.getDate("birthdate"), rs.getString("role"));
             }
         } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
+             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, sqlEx);
         }
         return user; 
     } 
 
     @Override
+    @Interceptors(interceptorUpdate.class)
     public boolean editUser(User user) {
         query = "update user set login='"+ user.getLogin() + "', "
                 + "password='"+ user.getPassword() + "', "
@@ -114,7 +109,7 @@ public class UserDao implements UserDaoLocal {
         try (Connection con = DriverManager.getConnection(url, username, password)) {
             if(con.prepareStatement(query).executeUpdate()>0)return true;
         }catch (SQLException sqlEx){
-            sqlEx.printStackTrace();
+             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, sqlEx);
         }
         return false;
     }
@@ -122,9 +117,10 @@ public class UserDao implements UserDaoLocal {
     
     
     @Override
+    @Interceptors(interceptor.class)
     public boolean insertUser(User user) {
         
-         query = "insert into user (login, email, password, birthdate) " +
+        query = "insert into user (login, email, password, birthdate) " +
                 "values (?, ?, ?, ?);";
        try {
            Class.forName("com.mysql.cj.jdbc.Driver");
@@ -139,7 +135,7 @@ public class UserDao implements UserDaoLocal {
             pStmt.setDate(4,new java.sql.Date(user.getbDate().getTime()));
             if (pStmt.executeUpdate()>0) return true;
         }catch (SQLException sqlEx){
-            sqlEx.printStackTrace();
+             Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, sqlEx);
        }
         return false;    
     }
