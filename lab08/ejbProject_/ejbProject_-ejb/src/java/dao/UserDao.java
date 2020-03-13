@@ -106,6 +106,11 @@ public class UserDao implements UserDaoLocal {
                 + "password='"+ user.getPassword() + "', "
                 + "email='"+ user.getEmail() + "' "
                 + "where userID=" +user.getUserID() + ";";
+       try {
+           Class.forName("com.mysql.cj.jdbc.Driver");
+       } catch (ClassNotFoundException ex) {
+           Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+       }
         try (Connection con = DriverManager.getConnection(url, username, password)) {
             if(con.prepareStatement(query).executeUpdate()>0)return true;
         }catch (SQLException sqlEx){
@@ -121,7 +126,11 @@ public class UserDao implements UserDaoLocal {
         
          query = "insert into user (login, email, password, birthdate) " +
                 "values (?, ?, ?, ?);";
-         
+       try {
+           Class.forName("com.mysql.cj.jdbc.Driver");
+       } catch (ClassNotFoundException ex) {
+           Logger.getLogger(UserDao.class.getName()).log(Level.SEVERE, null, ex);
+       }
         try(Connection con = DriverManager.getConnection(url, username, password)){
             PreparedStatement pStmt = con.prepareStatement(query);
             pStmt.setString(1, user.getLogin());

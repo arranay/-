@@ -35,8 +35,13 @@
                 <td><input required type="password" name="password2"  /></td>
             </tr>
             <tr>
-                <td><input required type="submit" value="Сохранить"/></td></tr>
+                <td>
+                    <input required type="submit" value="Сохранить"/>
+                </td></tr>
             </table>
+        
+        
+            
     </form>
     </body>
 </html>

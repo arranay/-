@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.User;
-import sessionBean.SessionBeanLocal;
 import singlton.countAddUser;
 import singlton.countDeleteUser;
 
@@ -75,17 +74,6 @@ public class UserServlet extends HttpServlet {
         } 
         
     }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @EJB
-    SessionBeanLocal slBean;
     
     @EJB
     private countDeleteUser caUser;

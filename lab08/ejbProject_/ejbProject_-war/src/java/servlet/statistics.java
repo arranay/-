@@ -7,6 +7,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import model.User;
 import singlton.countAddUser;
 import singlton.countDeleteUser;
 import singlton.countUpdateUser;
+import statefullBean.StatefullBeanLocal;
 
 /**
  *
@@ -59,11 +61,11 @@ public class statistics extends HttpServlet {
     
     @EJB
     private countUpdateUser cuUser;
+    
    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
             request.setAttribute("add", caUser.getCount());
             request.setAttribute("delete", cdUser.getCount());
             request.setAttribute("update", cuUser.getCount());

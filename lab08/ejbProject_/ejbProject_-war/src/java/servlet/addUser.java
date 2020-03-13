@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,9 +19,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.User;
-import sessionBean.SessionBean;
-import sessionBean.SessionBeanLocal;
 import singlton.countAddUser;
+import statefullBean.StatefullBeanLocal;
 
 /**
  *
@@ -53,12 +53,23 @@ public class addUser extends HttpServlet {
             out.println("</html>");
         }
     }
-
+    
+    @EJB
+    private StatefullBeanLocal slBean;
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("addUser.jsp");
-        requestDispatcher.forward(request, response);
+        String go = request.getParameter("go");
+                if (go.equals("add")){
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("addUser.jsp");
+                    requestDispatcher.forward(request, response);
+                }else{
+                    List<String> ls = slBean.returnList();
+                    request.setAttribute("userList", ls);
+                    RequestDispatcher requestDispatcher = request.getRequestDispatcher("show.jsp");
+                    requestDispatcher.forward(request, response);
+                }
     }
 
     /**
@@ -73,10 +84,10 @@ public class addUser extends HttpServlet {
     private UserDaoLocal userDao;
     
     @EJB
-    SessionBeanLocal slBean;
-    
-    @EJB
     private countAddUser caUser;
+    
+    
+    
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -93,12 +104,15 @@ public class addUser extends HttpServlet {
        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
        String bdate = request.getParameter("bdate");
        try {
-                user.setbDate(format.parse(bdate));
+                Date date =format.parse(bdate); 
+                user.setbDate(date);  
             } catch (ParseException e) {
                     e.printStackTrace();
             }
-       userDao.insertUser(user);
-       caUser.plus();
+       if (userDao.insertUser(user)){
+           caUser.plus();
+           slBean.addLogin(request.getParameter("login"));
+       }
        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
        requestDispatcher.forward(request, response);
     }

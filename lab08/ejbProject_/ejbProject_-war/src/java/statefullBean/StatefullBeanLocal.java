@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sessionBean;
+package statefullBean;
 
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -12,6 +14,8 @@ import javax.ejb.Local;
  * @author Лера
  */
 @Local
-public interface SessionBeanLocal {
-   
+public interface StatefullBeanLocal {
+    
+    public void addLogin(String login);
+    public List<String> returnList();
 }

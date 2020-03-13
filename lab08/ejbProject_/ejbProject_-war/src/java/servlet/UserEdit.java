@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.User;
-import sessionBean.SessionBeanLocal;
 import singlton.countAddUser;
 import singlton.countDeleteUser;
 import singlton.countUpdateUser;
@@ -78,8 +77,7 @@ public class UserEdit extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @EJB
-    SessionBeanLocal slBean;
+
     
     @EJB
     private countUpdateUser caUser;
@@ -103,8 +101,7 @@ public class UserEdit extends HttpServlet {
         user.setLogin(request.getParameter("newLogin"));
         user.setEmail(request.getParameter("newEmail"));
         user.setPassword(request.getParameter("newPass"));
-        userDao.editUser(user);
-        caUser.plus();
+        if (userDao.editUser(user)) caUser.plus();
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);
     }
