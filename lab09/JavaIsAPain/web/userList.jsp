@@ -45,7 +45,7 @@
                         <input class="btn" type="submit" value="редактировать">                     
                     </form>
                 </td>
-                <td><form action="user" method="post">
+                <td><form action="userList" method="post">
                     <input type="hidden" name="id" value="${user.getId()}">
                     <input class="btn" type="submit" value="удалить">
                 </form>

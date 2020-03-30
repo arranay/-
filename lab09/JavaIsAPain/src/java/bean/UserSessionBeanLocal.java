@@ -16,4 +16,9 @@ import javax.ejb.Local;
 @Local
 public interface UserSessionBeanLocal {
     public List<User> findAll();
+    public void create(User u);
+    public void edit(User u);
+    public void remove(User u);
+    public User find(int id);
+
 }

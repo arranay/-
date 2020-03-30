@@ -18,4 +18,10 @@ public class RoleSessionBean implements RoleSessionBeanLocal {
                 =em.createQuery("SELECT r FROM Role r").getResultList();
         return roleList;
     }
+
+    @Override
+    public Role find(int id) {
+        Role role = em.find(Role.class, id);        
+        return role;
+    }
 }

@@ -26,9 +26,6 @@ public class Role implements Serializable {
     
     @Column(name = "description")
     private String description;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "role")
-    private Collection<User> userCollection;
 
     public Integer getId() {
         return id;
@@ -89,20 +86,6 @@ public class Role implements Serializable {
      */
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    /**
-     * @return the userCollection
-     */
-    public Collection<User> getUserCollection() {
-        return userCollection;
-    }
-
-    /**
-     * @param userCollection the userCollection to set
-     */
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
     }
     
     public Role(){

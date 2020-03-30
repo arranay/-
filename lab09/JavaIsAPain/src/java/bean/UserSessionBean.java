@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bean;
 
 import entities.User;
@@ -11,25 +6,37 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author Лера
- */
 @Stateless
 public class UserSessionBean implements UserSessionBeanLocal {
     
     @PersistenceContext(unitName = "JavaIsAPainPU")
     private EntityManager em;
-
-    protected EntityManager getEntityManager() {
-        return em;
-    }
     
     @Override
     public List<User> findAll() {
         List <User> userList
-                =getEntityManager().createQuery("SELECT u FROM User u").getResultList();
+                =em.createQuery("SELECT u FROM User u").getResultList();
         return userList;
+    }
+    
+    @Override
+    public void create(User u) {
+        em.persist(u);
+    }
+
+    @Override
+    public void edit(User u) {
+        em.merge(u);
+    }
+
+    @Override
+    public void remove(User u) {
+        em.remove(em.merge(u));
+    }
+     
+    @Override
+    public User find(int id) {
+        return em.find(User.class, id);
     }
     
     

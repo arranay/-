@@ -1,6 +1,8 @@
 package controllers;
 
+import bean.RoleSessionBeanLocal;
 import bean.UserSessionBeanLocal;
+import entities.Role;
 import entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,8 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class userList extends HttpServlet {
+public class addUser extends HttpServlet {
 
+  
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -22,43 +25,56 @@ public class userList extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet userList</title>");            
+            out.println("<title>Servlet addUser</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet userList at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet addUser at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
     @EJB
-    UserSessionBeanLocal userSBL;
-    
+    RoleSessionBeanLocal roleSBL;
+        
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
-            List<User> userList = userSBL.findAll();
-            request.setAttribute("userList", userList);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("userList.jsp");
+         try{
+            List<Role> roleList = roleSBL.findAll();
+            request.setAttribute("roleList", roleList);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("addUser.jsp");
             requestDispatcher.forward(request, response);
         }catch (Exception e) { 
             throw new ServletException(e.getMessage()); 
         }  
     }
 
-  
+
+    
+    @EJB
+    UserSessionBeanLocal userSBL;
+        
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        User u = userSBL.find(id);
-        userSBL.remove(u);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-        requestDispatcher.forward(request, response);
+        if (!(request.getParameter("password").equals(request.getParameter("password2")))){
+            request.setAttribute("error", "Пароли не совпадают");
+            List<Role> roleList = roleSBL.findAll();
+            request.setAttribute("roleList", roleList);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("addUser.jsp");
+            requestDispatcher.forward(request, response);
+        }
+       User user = new User();
+       user.setLogin(request.getParameter("login"));
+       user.setPassword(request.getParameter("password"));
+       Role role = roleSBL.find(Integer.parseInt(request.getParameter("role")));
+       user.setRole(role);
+       userSBL.create(user);
+       RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+       requestDispatcher.forward(request, response);
     }
 
-  
     @Override
     public String getServletInfo() {
         return "Short description";
