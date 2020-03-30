@@ -40,7 +40,7 @@
                     <td>${user.getPassword()}</td>
                     <td>${user.getRole().getName()}</td>
                     <td>
-                    <form action="userEdit" method="get">
+                    <form action="editUser" method="get">
                         <input type="hidden" name="id" value="${user.getId()}">
                         <input class="btn" type="submit" value="редактировать">                     
                     </form>

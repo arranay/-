@@ -14,12 +14,12 @@
     <body>
        <form action = "userList" method="get">
             <input type="submit" value="Список пользователей">
-        </form>
+        </form><br>
          <form action = "addUser" method="get">
             <input type="submit" value="Добавить пользователя">
-        </form>
+        </form><br>
         <form action = "roleList" method="get">
             <input type="submit" value="Список всех ролей">
-        </form>
+        </form><br>
     </body>
 </html>
