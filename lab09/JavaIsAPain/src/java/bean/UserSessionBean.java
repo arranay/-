@@ -25,11 +25,10 @@ public class UserSessionBean implements UserSessionBeanLocal {
         return em;
     }
     
+    @Override
     public List<User> findAll() {
         List <User> userList
                 =getEntityManager().createQuery("SELECT u FROM User u").getResultList();
-        
-        
         return userList;
     }
     

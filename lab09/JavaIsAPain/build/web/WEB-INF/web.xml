@@ -4,9 +4,17 @@
         <servlet-name>userList</servlet-name>
         <servlet-class>controllers.userList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>roleList</servlet-name>
+        <servlet-class>controllers.roleList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>userList</servlet-name>
         <url-pattern>/userList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>roleList</servlet-name>
+        <url-pattern>/roleList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

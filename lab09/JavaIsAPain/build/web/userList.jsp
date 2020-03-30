@@ -38,7 +38,7 @@
                  <tr>
                     <td>${user.getLogin()}</td>
                     <td>${user.getPassword()}</td>
-                    <td>${user.getRole()}</td>
+                    <td>${user.getRole().getName()}</td>
                     <td>
                     <form action="userEdit" method="get">
                         <input type="hidden" name="id" value="${user.getId()}">

@@ -15,5 +15,8 @@
        <form action = "userList" method="get">
             <input type="submit" value="Список пользователей">
         </form>
+        <form action = "roleList" method="get">
+            <input type="submit" value="Список всех ролей">
+        </form>
     </body>
 </html>
