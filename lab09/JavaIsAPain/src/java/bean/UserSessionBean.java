@@ -20,6 +20,13 @@ public class UserSessionBean implements UserSessionBeanLocal {
     }
     
     @Override
+    public List<User> findAllStudent() {
+        List <User> userList
+                =em.createQuery("select u from User u WHERE u.role.name='student'").getResultList();
+        return userList;
+    }
+    
+    @Override
     public void create(User u) {
         em.persist(u);
     }

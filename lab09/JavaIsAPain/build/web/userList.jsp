@@ -28,25 +28,23 @@
     <tr>
         <td>логин</td>
         <td>пароль</td>
-        <td>email</td>
-        <td>дата рождения</td>
         <td>роль в системе</td>
         <td></td>
         <td></td>
     </tr>
     <c:forEach items="${userList}" var="user">
                  <tr>
-                    <td>${user.getLogin()}</td>
-                    <td>${user.getPassword()}</td>
-                    <td>${user.getRole().getName()}</td>
+                    <td>${user.login}</td>
+                    <td>${user.password}</td>
+                    <td>${user.role.name}</td>
                     <td>
                     <form action="editUser" method="get">
-                        <input type="hidden" name="id" value="${user.getId()}">
+                        <input type="hidden" name="id" value="${user.id}">
                         <input class="btn" type="submit" value="редактировать">                     
                     </form>
                 </td>
                 <td><form action="userList" method="post">
-                    <input type="hidden" name="id" value="${user.getId()}">
+                    <input type="hidden" name="id" value="${user.id}">
                     <input class="btn" type="submit" value="удалить">
                 </form>
                 </td>

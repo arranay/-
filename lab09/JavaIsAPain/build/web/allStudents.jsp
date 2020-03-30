@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Список пользователей</title>
+        <title>Список студентов</title>
         
         <style>
             table{
@@ -27,24 +27,24 @@
         <table align="center">
     <tr>
         <td>логин</td>
-        <td>пароль</td>
         <td>роль в системе</td>
+        <td>описание</td>
         <td></td>
         <td></td>
     </tr>
     <c:forEach items="${userList}" var="user">
                  <tr>
                     <td>${user.login}</td>
-                    <td>${user.password}</td>
                     <td>${user.role.name}</td>
+                    <td>${user.role.description}</td>
                     <td>
                     <form action="editUser" method="get">
-                        <input type="hidden" name="id" value="${user.id}">
+                        <input type="hidden" name="id" value="${user.getId()}">
                         <input class="btn" type="submit" value="редактировать">                     
                     </form>
                 </td>
                 <td><form action="userList" method="post">
-                    <input type="hidden" name="id" value="${user.id}">
+                    <input type="hidden" name="id" value="${user.getId()}">
                     <input class="btn" type="submit" value="удалить">
                 </form>
                 </td>

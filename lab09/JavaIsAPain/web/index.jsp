@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : 30.03.2020, 12:27:37
-    Author     : Лера
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,6 +14,9 @@
         </form><br>
         <form action = "roleList" method="get">
             <input type="submit" value="Список всех ролей">
+        </form><br>
+        <form action = "allStudents" method="get">
+            <input type="submit" value="Показать только студентов">
         </form><br>
     </body>
 </html>
