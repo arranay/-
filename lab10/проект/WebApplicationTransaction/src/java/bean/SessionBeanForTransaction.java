@@ -8,20 +8,22 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.ejb.EJBContext;
 import javax.ejb.Singleton;
-import javax.ejb.TransactionAttribute;
-import static javax.ejb.TransactionAttributeType.REQUIRED;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 
 @Singleton
 @TransactionManagement(TransactionManagementType.BEAN)
 public class SessionBeanForTransaction implements SessionBeanForTransactionLocal {
 
-    List<User> userList = new ArrayList<User>();
-    List<User> userEditList = new ArrayList<User>();
-    List<ClassGroup> groupList = new ArrayList<ClassGroup>();
+    List<User> userList = new ArrayList<>();
+    List<User> userEditList = new ArrayList<>();
+    List<ClassGroup> groupList = new ArrayList<>();
 
     @Override
     public void addUserList(User u) {
@@ -47,6 +49,7 @@ public class SessionBeanForTransaction implements SessionBeanForTransactionLocal
     UserSessionBeanLocal userSBL;
     
     
+    @Override
     public void addUser(){
         try {
         ut.begin();
@@ -61,11 +64,12 @@ public class SessionBeanForTransaction implements SessionBeanForTransactionLocal
         }catch (Exception ex) {
             Logger.getLogger(SessionBeanForTransaction.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
-            userList=new ArrayList<User>();
-            userEditList = new ArrayList<User>();
+            userList=new ArrayList<>();
+            userEditList = new ArrayList<>();
         }
     } 
     
+    @Override
     public void addGroup(){
         try {
         
@@ -78,7 +82,7 @@ public class SessionBeanForTransaction implements SessionBeanForTransactionLocal
         }catch (Exception ex) {
             Logger.getLogger(SessionBeanForTransaction.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
-            groupList = new ArrayList<ClassGroup>();
+            groupList = new ArrayList<>();
         }
     } 
 }

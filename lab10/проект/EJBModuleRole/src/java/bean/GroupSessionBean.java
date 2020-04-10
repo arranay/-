@@ -6,7 +6,8 @@ import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
-import static javax.ejb.TransactionAttributeType.REQUIRED;
+import javax.ejb.TransactionAttributeType;
+import static javax.ejb.TransactionAttributeType.NOT_SUPPORTED;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -15,7 +16,6 @@ public class GroupSessionBean implements GroupSessionBeanLocal {
 
     @PersistenceContext(unitName = "EJBModuleGroupPU")
     private EntityManager em;
-    
      
     @Override
     public List<ClassGroup> findAll() {
@@ -27,7 +27,8 @@ public class GroupSessionBean implements GroupSessionBeanLocal {
     @Resource
     private SessionContext context;
         
-    @Override
+    @Override 
+    @TransactionAttribute(NOT_SUPPORTED)
     public void create(ClassGroup g) {
         em.persist(g);
         if (g.getNumberOfStudents()>100) context.setRollbackOnly();
@@ -41,6 +42,7 @@ public class GroupSessionBean implements GroupSessionBeanLocal {
    
     
     @Override
+    
     public void remove(ClassGroup g) {
         em.remove(em.merge(g));  
     }
