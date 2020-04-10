@@ -6,7 +6,8 @@ import javax.ejb.Local;
 
 @Local
 public interface SessionBeanForTransactionLocal {
-    public void addUserAndGroup();
+    public void addUser();
+    public void addGroup();
     public void addGroupList(ClassGroup g);
     public void addUserList(User u);
     public void addUserEditList(User u);

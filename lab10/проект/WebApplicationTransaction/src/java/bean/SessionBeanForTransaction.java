@@ -47,7 +47,7 @@ public class SessionBeanForTransaction implements SessionBeanForTransactionLocal
     UserSessionBeanLocal userSBL;
     
     
-    public void addUserAndGroup(){
+    public void addUser(){
         try {
         ut.begin();
         for(User u: userList){
@@ -58,6 +58,17 @@ public class SessionBeanForTransaction implements SessionBeanForTransactionLocal
         }
         ut.commit();
         
+        }catch (Exception ex) {
+            Logger.getLogger(SessionBeanForTransaction.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            userList=new ArrayList<User>();
+            userEditList = new ArrayList<User>();
+        }
+    } 
+    
+    public void addGroup(){
+        try {
+        
         ut.begin();
         for (ClassGroup g: groupList){
             groupSBL.create(g);
@@ -67,8 +78,6 @@ public class SessionBeanForTransaction implements SessionBeanForTransactionLocal
         }catch (Exception ex) {
             Logger.getLogger(SessionBeanForTransaction.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
-            userList=new ArrayList<User>();
-            userEditList = new ArrayList<User>();
             groupList = new ArrayList<ClassGroup>();
         }
     } 

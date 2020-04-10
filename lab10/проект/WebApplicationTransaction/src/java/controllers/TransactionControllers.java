@@ -1,6 +1,5 @@
 package controllers;
 
-import bean.SessionBeanForRollBackLocal;
 import bean.SessionBeanForTransactionLocal;
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -16,15 +15,14 @@ public class TransactionControllers extends HttpServlet {
     @EJB
     SessionBeanForTransactionLocal sbForTransaction;
     
-    @EJB
-    SessionBeanForRollBackLocal sbForRollBack;
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        sbForTransaction.addUserAndGroup(); 
-        sbForRollBack.Rollback();
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+        String action = request.getParameter("action");
+        RequestDispatcher requestDispatcher;
+        if (action.equals("user"))sbForTransaction.addUser(); 
+        else sbForTransaction.addGroup();
+        requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);
     }
 }
