@@ -21,5 +21,10 @@
         <form action = "addGroup" method="get">
             <input type="submit" value="Добавить группу">
         </form><br>
+        
+        Транзакции:
+        <form action = "transactionControllers" method="post">
+            <input type="submit" value="Выполнить транзакцию">
+        </form><br>
     </body>
 </html>

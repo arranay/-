@@ -1,9 +1,12 @@
 package controllersGroup;
 
 import bean.GroupSessionBeanLocal;
+import bean.SessionBeanForTransaction;
+import bean.SessionBeanForTransactionLocal;
 import entities.ClassGroup;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +24,7 @@ public class addGroup extends HttpServlet {
     }
 
     @EJB
-    GroupSessionBeanLocal groupSBL;
+    SessionBeanForTransactionLocal sbForTransaction;
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -31,7 +34,7 @@ public class addGroup extends HttpServlet {
         classGroup.setName(request.getParameter("name"));
         classGroup.setDescription(request.getParameter("description"));
         classGroup.setNumberOfStudents(Integer.parseInt(request.getParameter("number")));
-        groupSBL.create(classGroup);
+        sbForTransaction.addGroupList(classGroup);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);
     }

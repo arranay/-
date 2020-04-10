@@ -1,12 +1,12 @@
 package controllersUser;
 
 import bean.RoleSessionBeanLocal;
-import bean.UserSessionBeanLocal;
+import bean.SessionBeanForTransactionLocal;
 import entities.Role;
 import entities.User;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,7 +32,7 @@ public class addUser extends HttpServlet {
     }
 
     @EJB
-    UserSessionBeanLocal userSBL;
+    SessionBeanForTransactionLocal sbForTransaction;
         
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -49,7 +49,7 @@ public class addUser extends HttpServlet {
        user.setPassword(request.getParameter("password"));
        Role role = roleSBL.find(Integer.parseInt(request.getParameter("role")));
        user.setRole(role);
-       userSBL.create(user);
+       sbForTransaction.addUserList(user);
        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
        requestDispatcher.forward(request, response);
     }

@@ -1,6 +1,7 @@
 package controllersUser;
 
 import bean.RoleSessionBeanLocal;
+import bean.SessionBeanForTransactionLocal;
 import bean.UserSessionBeanLocal;
 import entities.Role;
 import entities.User;
@@ -35,13 +36,16 @@ public class editUser extends HttpServlet {
         requestDispatcher.forward(request, response);
     }
 
+    @EJB
+    SessionBeanForTransactionLocal sbForTransaction;
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         u.setLogin(request.getParameter("login"));        
         Role role = roleSBL.find(Integer.parseInt(request.getParameter("role")));
         u.setRole(role);
-        userSBL.edit(u);
+        sbForTransaction.addUserEditList(u);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);
     }

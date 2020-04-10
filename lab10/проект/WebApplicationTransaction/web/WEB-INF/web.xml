@@ -24,6 +24,10 @@
         <servlet-name>addGroup</servlet-name>
         <servlet-class>controllersGroup.addGroup</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TransactionControllers</servlet-name>
+        <servlet-class>controllers.TransactionControllers</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>userList</servlet-name>
         <url-pattern>/userList</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>addGroup</servlet-name>
         <url-pattern>/addGroup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TransactionControllers</servlet-name>
+        <url-pattern>/transactionControllers</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
