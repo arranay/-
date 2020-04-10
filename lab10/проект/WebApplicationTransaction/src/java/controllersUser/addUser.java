@@ -1,4 +1,4 @@
-package controllers;
+package controllersUser;
 
 import bean.RoleSessionBeanLocal;
 import bean.UserSessionBeanLocal;

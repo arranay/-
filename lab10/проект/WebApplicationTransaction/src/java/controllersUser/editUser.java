@@ -1,6 +1,8 @@
-package controllers;
+package controllersUser;
 
+import bean.RoleSessionBeanLocal;
 import bean.UserSessionBeanLocal;
+import entities.Role;
 import entities.User;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,31 +14,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class userList extends HttpServlet {
+public class editUser extends HttpServlet {
 
     @EJB
     UserSessionBeanLocal userSBL;
     
+    @EJB
+    RoleSessionBeanLocal roleSBL;
+    User u;
+            
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
-            List<User> userList = userSBL.findAll();
-            request.setAttribute("userList", userList);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("userList.jsp");
-            requestDispatcher.forward(request, response);
-        }catch (Exception e) { 
-            throw new ServletException(e.getMessage()); 
-        }  
+        int id = Integer.parseInt(request.getParameter("id"));
+        u = userSBL.find(id);
+        request.setAttribute("user", u);
+        List<Role> roleList = roleSBL.findAll();
+        request.setAttribute("roleList", roleList);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("editUser.jsp");
+        requestDispatcher.forward(request, response);
     }
 
-  
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        User u = userSBL.find(id);
-        userSBL.remove(u);
+        u.setLogin(request.getParameter("login"));        
+        Role role = roleSBL.find(Integer.parseInt(request.getParameter("role")));
+        u.setRole(role);
+        userSBL.edit(u);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);
     }
