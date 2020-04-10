@@ -1,25 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bean;
 
 import entities.ClassGroup;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import static javax.ejb.TransactionAttributeType.REQUIRED;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author Лера
- */
 @Stateless
 public class GroupSessionBean implements GroupSessionBeanLocal {
 
     @PersistenceContext(unitName = "EJBModuleGroupPU")
     private EntityManager em;
+    
      
     @Override
     public List<ClassGroup> findAll() {
@@ -28,9 +25,14 @@ public class GroupSessionBean implements GroupSessionBeanLocal {
         return groupList;
     }
 
+    @Resource
+    private SessionContext context;
+        
     @Override
+    @TransactionAttribute(REQUIRED)
     public void create(ClassGroup g) {
         em.persist(g);
+        if (g.getNumberOfStudents()>100) context.setRollbackOnly();
     }
 
     @Override
@@ -38,14 +40,16 @@ public class GroupSessionBean implements GroupSessionBeanLocal {
         em.merge(g);
     }
 
+   
+    
     @Override
     public void remove(ClassGroup g) {
-        em.remove(em.merge(g));
+        em.remove(em.merge(g));  
     }
      
 
     @Override
     public ClassGroup find(int id) {
         return em.find(ClassGroup.class, id);
-    }   
+    }  
 }

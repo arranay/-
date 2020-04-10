@@ -8,11 +8,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.EJBContext;
 import javax.ejb.Singleton;
+import javax.ejb.TransactionAttribute;
+import static javax.ejb.TransactionAttributeType.REQUIRED;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
-import javax.transaction.NotSupportedException;
-import javax.transaction.SystemException;
 
 @Singleton
 @TransactionManagement(TransactionManagementType.BEAN)
@@ -46,7 +47,6 @@ public class SessionBeanForTransaction implements SessionBeanForTransactionLocal
     UserSessionBeanLocal userSBL;
     
     
-    //добавление в бд пользователей
     public void addUserAndGroup(){
         try {
         ut.begin();
@@ -64,12 +64,12 @@ public class SessionBeanForTransaction implements SessionBeanForTransactionLocal
         }
         ut.commit();
         
-        } catch (Exception ex) {
+        }catch (Exception ex) {
             Logger.getLogger(SessionBeanForTransaction.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             userList=new ArrayList<User>();
             userEditList = new ArrayList<User>();
             groupList = new ArrayList<ClassGroup>();
         }
-    }  
+    } 
 }
