@@ -30,20 +30,13 @@
         <td>описание</td>
         <td>кол-во студентов</td>
         <td></td>
-        <td></td>
     </tr>
     <c:forEach items="${groupList}" var="group">
                  <tr>
                     <td>${group.name}</td>
                     <td>${group.description}</td>
                     <td>${group.numberOfStudents}</td>
-                    <td>
-                    <form action="editUser" method="get">
-                        <input type="hidden" name="id" value="${group.id}">
-                        <input class="btn" type="submit" value="редактировать">                     
-                    </form>
-                </td>
-                <td><form action="userList" method="post">
+                <td><form action="groupList" method="post">
                     <input type="hidden" name="id" value="${group.id}">
                     <input class="btn" type="submit" value="удалить">
                 </form>

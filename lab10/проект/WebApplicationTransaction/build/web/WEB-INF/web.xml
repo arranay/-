@@ -20,6 +20,10 @@
         <servlet-name>groupList</servlet-name>
         <servlet-class>controllersGroup.groupList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addGroup</servlet-name>
+        <servlet-class>controllersGroup.addGroup</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>userList</servlet-name>
         <url-pattern>/userList</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>groupList</servlet-name>
         <url-pattern>/groupList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addGroup</servlet-name>
+        <url-pattern>/addGroup</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

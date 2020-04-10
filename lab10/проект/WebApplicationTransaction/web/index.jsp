@@ -18,5 +18,8 @@
         <form action = "groupList" method="get">
             <input type="submit" value="Список всех групп">
         </form><br>
+        <form action = "addGroup" method="get">
+            <input type="submit" value="Добавить группу">
+        </form><br>
     </body>
 </html>
