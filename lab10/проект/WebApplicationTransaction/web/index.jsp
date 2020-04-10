@@ -15,8 +15,5 @@
         <form action = "roleList" method="get">
             <input type="submit" value="Список всех ролей">
         </form><br>
-        <form action = "allStudents" method="get">
-            <input type="submit" value="Показать только студентов">
-        </form><br>
     </body>
 </html>

@@ -4,9 +4,33 @@
         <servlet-name>userList</servlet-name>
         <servlet-class>controllers.userList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addUser</servlet-name>
+        <servlet-class>controllers.addUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>editUser</servlet-name>
+        <servlet-class>controllers.editUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>roleList</servlet-name>
+        <servlet-class>controllers.roleList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>userList</servlet-name>
         <url-pattern>/userList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addUser</servlet-name>
+        <url-pattern>/addUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editUser</servlet-name>
+        <url-pattern>/editUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>roleList</servlet-name>
+        <url-pattern>/roleList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
