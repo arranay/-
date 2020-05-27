@@ -1,16 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bean;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
@@ -47,9 +48,31 @@ public class NewManagedBeanJMS {
             connection.close();
  
         } catch (JMSException ex) {
-            System.out.println(ex.getMessage());
+           Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Cannot close session", ex);
         }
-    }  
+    }
+    
+    public String receiveMessage(){
+        Connection connection = null;
+        String msgStr = "";
+        try {
+            ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(user, password, url);
+            connection = connectionFactory.createConnection();
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            destination = session.createQueue("amqmsg");
+            MessageConsumer consumer = session.createConsumer(destination);
+            connection.start();
+            Message msg;
+            msg = consumer.receive(60);
+            if (msg==null) return "В очереди нет сообщений";
+            TextMessage textMsg = (TextMessage)msg;
+            msgStr = msg.getJMSMessageID() + " ТЕКСТ: " + textMsg.getText(); 
+            connection.close();
+        }catch (JMSException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Cannot close session", ex);
+        }
+        return msgStr;
+    }
     
     public NewManagedBeanJMS() {
     }
