@@ -16,12 +16,12 @@
     <body>
        <form action="JMSServlet" method="POST">
             Текст сообщения:
-            <textarea name="text" cols="39"></textarea>
+            <textarea name="text"></textarea>
             <button>Отправить</button>
         </form>
         <form action="JMSServlet" method="GET">
             <button>Получить сообщение из очереди</button>
-        </form>
+        </form><br>
         <c:out value="${msg}"/>
     </body>
 </html>
